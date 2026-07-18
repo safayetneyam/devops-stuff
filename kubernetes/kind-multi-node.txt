@@ -1,0 +1,29 @@
+# KinD Installation
+[ $(uname -m) = x86_64 ] && curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.32.0/kind-linux-amd64
+chmod +x ./kind
+sudo mv ./kind /usr/local/bin/kind
+
+# Create: config.yaml
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4 # depends entirely on official future release
+nodes:
+- role: control-plane
+- role: worker
+- role: worker
+
+# Execute Command
+kind create cluster --config config.yaml --name cka-cluster
+kind get clusters
+
+# Download kubectl Binary
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+
+# Run CHECKSUM for kubectl Binary (Optional)
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+
+# Install kubectl
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+# Check kubectl Version
+kubectl version --client
