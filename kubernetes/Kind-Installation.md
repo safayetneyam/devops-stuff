@@ -4,8 +4,7 @@
   - Go 1.6+ 
   - Docker
 
-## Single-Node Installation 
-### Installation: KinD
+## Installation: KinD
 
 **Details**: https://kind.sigs.k8s.io/docs/user/quick-start
 
@@ -16,6 +15,7 @@ chmod +x ./kind
 sudo mv ./kind /usr/local/bin/kind
 ```
 
+## Single-Node Installation 
 ### Creation: Cluster
 **Using Latest KinD Image**
 ```sh
