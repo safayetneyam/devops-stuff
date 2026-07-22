@@ -43,6 +43,21 @@ nodes:
 - role: worker
 ```
 
+**To Expose a Cluster with Specific Port (NodePort Service)**
+```yaml
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: control-plane
+  extraPortMappings:
+  - containerPort: 30001
+    hostPort: 30001
+- role: worker
+- role: worker
+```
+- ```containerPort``` is the port inside the kind node’s Docker container, usually matching the Kubernetes ```nodePort```.
+- ```hostPort``` is the port on your computer that forwards traffic to that container port.
+
 ### Run Command: Creates Cluster
 ```sh
 kind create cluster --config <configuration-file> --name <name-of-cluster>
@@ -53,6 +68,13 @@ kind create cluster --config config.yaml --name cka-cluster-three
 ```sh
 kind get clusters
 ```
+
+### Delete the Clusters
+```sh
+kind delete cluster --name <name-of-cluster>
+kind delete cluster --name cka-cluster
+```
+
 
 ## Interaction with Clusters
 To interact with the cluster, it is essential to install Kubectl utility on host machine.
